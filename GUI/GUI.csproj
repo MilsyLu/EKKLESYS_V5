@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F198E98-7BF1-4670-B5F2-4BCEED0EF0EE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GUI</RootNamespace>
+    <AssemblyName>GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FontAwesome.Sharp, Version=6.6.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.6.6.0\lib\net472\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QuestPDF, Version=2025.5.0.0, Culture=neutral, PublicKeyToken=0f3c2b2315ff52c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuestPDF.2025.5.0\lib\netstandard2.0\QuestPDF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms Admin\FrmAsistentesEvento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmAsistentesEvento.Designer.cs">
+      <DependentUpon>FrmAsistentesEvento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDashboard.Designer.cs">
+      <DependentUpon>FrmDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms User\FrmCursosUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms User\FrmCursosUser.Designer.cs">
+      <DependentUpon>FrmCursosUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms User\FrmDetalleCursoUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms User\FrmDetalleCursoUser.Designer.cs">
+      <DependentUpon>FrmDetalleCursoUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms User\FrmDetalleEventoUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms User\FrmDetalleEventoUser.Designer.cs">
+      <DependentUpon>FrmDetalleEventoUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms User\FrmEventosUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms User\FrmEventosUser.Designer.cs">
+      <DependentUpon>FrmEventosUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAcercaDe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAcercaDe.Designer.cs">
+      <DependentUpon>FrmAcercaDe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCambiarPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCambiarPassword.Designer.cs">
+      <DependentUpon>FrmCambiarPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCrearCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCrearCurso.Designer.cs">
+      <DependentUpon>FrmCrearCurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCrearEvento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCrearEvento.Designer.cs">
+      <DependentUpon>FrmCrearEvento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCursosAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmCursosAdmin.Designer.cs">
+      <DependentUpon>FrmCursosAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDetalleCursoAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDetalleCursoAdmin.Designer.cs">
+      <DependentUpon>FrmDetalleCursoAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmGestionComunas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmGestionComunas.Designer.cs">
+      <DependentUpon>FrmGestionComunas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmInscritosCurso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmInscritosCurso.Designer.cs">
+      <DependentUpon>FrmInscritosCurso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDetalleEventoAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmDetalleEventoAdmin.Designer.cs">
+      <DependentUpon>FrmDetalleEventoAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmEventosAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmEventosAdmin.Designer.cs">
+      <DependentUpon>FrmEventosAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmInicio2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmInicio2.Designer.cs">
+      <DependentUpon>FrmInicio2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmPrincipalAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmPrincipalAdmin.Designer.cs">
+      <DependentUpon>FrmPrincipalAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms User\FrmPrincipalUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms User\FrmPrincipalUser.Designer.cs">
+      <DependentUpon>FrmPrincipalUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Admin\FrmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Admin\FrmUsuarios.Designer.cs">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmQr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmQr.Designer.cs">
+      <DependentUpon>FrmQr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PerfilForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PerfilForm.Designer.cs">
+      <DependentUpon>PerfilForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistroForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistroForm.Designer.cs">
+      <DependentUpon>RegistroForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Session.cs" />
+    <EmbeddedResource Include="Forms Admin\FrmAsistentesEvento.resx">
+      <DependentUpon>FrmAsistentesEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmCrearCurso.resx">
+      <DependentUpon>FrmCrearCurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmCrearEvento.resx">
+      <DependentUpon>FrmCrearEvento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmCursosAdmin.resx">
+      <DependentUpon>FrmCursosAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmDashboard.resx">
+      <DependentUpon>FrmDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmDetalleCursoAdmin.resx">
+      <DependentUpon>FrmDetalleCursoAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmEventosAdmin.resx">
+      <DependentUpon>FrmEventosAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmGestionComunas.resx">
+      <DependentUpon>FrmGestionComunas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmInscritosCurso.resx">
+      <DependentUpon>FrmInscritosCurso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms User\FrmCursosUser.resx">
+      <DependentUpon>FrmCursosUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms User\FrmDetalleCursoUser.resx">
+      <DependentUpon>FrmDetalleCursoUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms User\FrmEventosUser.resx">
+      <DependentUpon>FrmEventosUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAcercaDe.resx">
+      <DependentUpon>FrmAcercaDe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCambiarPassword.resx">
+      <DependentUpon>FrmCambiarPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmInicio2.resx">
+      <DependentUpon>FrmInicio2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmPrincipalAdmin.resx">
+      <DependentUpon>FrmPrincipalAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms User\FrmPrincipalUser.resx">
+      <DependentUpon>FrmPrincipalUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmUsuarios.resx">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmQr.resx">
+      <DependentUpon>FrmQr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerfilForm.resx">
+      <DependentUpon>PerfilForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="RegistroForm.resx">
+      <DependentUpon>RegistroForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{8EB2575F-272B-4240-9DBD-5FD4040D55D0}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENTITY\ENTITY.csproj">
+      <Project>{DF308C68-0CA6-42AA-8FB2-F7CD84A8130E}</Project>
+      <Name>ENTITY</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\qr_telegram.jpg" />
+    <None Include="Resources\qr.png" />
+    <None Include="Resources\bot.png" />
+    <Content Include="Resources\logo_ekklesys_redondo.png" />
+    <None Include="Resources\ojo1.png" />
+    <None Include="Resources\ojo.png" />
+    <None Include="Resources\Captura de pantalla 2025-05-21 162820.png" />
+    <None Include="Resources\lakewood.jpg" />
+    <None Include="Resources\ChatGPT Image 19 may 2025, 12_45_17.png" />
+    <None Include="Resources\1344311.png" />
+    <Content Include="Resources\backiee-317009.jpg" />
+    <None Include="Resources\Imagen de WhatsApp 2025-03-25 a las 12.25.36_7b118f4f.jpg" />
+    <None Include="Resources\backiee-3170091.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\QuestPDF.2025.5.0\build\net4\QuestPDF.targets" Condition="Exists('..\packages\QuestPDF.2025.5.0\build\net4\QuestPDF.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\QuestPDF.2025.5.0\build\net4\QuestPDF.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\QuestPDF.2025.5.0\build\net4\QuestPDF.targets'))" />
+  </Target>
+</Project>

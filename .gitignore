@@ -1,0 +1,19 @@
+# Carpetas de Visual Studio
+.vs/
+
+# Salidas de compilación
+bin/
+obj/
+
+# Archivos del sistema
+*.user
+*.suo
+*.cache
+*.log
+
+# Configuración local
+*.dbmdl
+*.vscode/
+
+# Archivos de dependencias 
+packages/
