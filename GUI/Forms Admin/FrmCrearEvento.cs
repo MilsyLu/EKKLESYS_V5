@@ -61,7 +61,9 @@ namespace GUI
                         ruta_imagen_evento = rutaImagenGuardada
                     };
 
-                    string resultado = eventoService.Guardar(evento);
+                    string resultado = eventoService.GuardarEventoComoAdmin(evento, Session.CurrentUser.id_usuario);
+
+                    ////string resultado = eventoService.Guardar(evento);
                     MessageBox.Show(resultado, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (!resultado.StartsWith("Error"))

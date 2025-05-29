@@ -16,8 +16,8 @@ namespace ENTITY
         public DateTime fecha_fin_evento { get; set; }
         public int capacidad_max_evento { get; set; }
         public List<Usuario> Asistentes { get; set; }
-
         public string ruta_imagen_evento { get; set; }
+        public int id_administrador { get; set; }
 
         public Evento()
         {

@@ -201,6 +201,9 @@ namespace GUI
 
                 progressContainer.Controls.Add(progressBar);
 
+                bool esAdmin = Session.CurrentUser?.es_administrador == "S";
+                bool cursoVigente = curso.fecha_fin_curso >= DateTime.Now;
+
                 Button btnVerDetalles = new Button
                 {
                     Text = "Ver detalles",
@@ -218,7 +221,8 @@ namespace GUI
                 ApplyRoundedCorners(btnVerDetalles, 5);
 
                 int cursoId = curso.id_curso;
-                btnVerDetalles.Enabled = !(curso.fecha_fin_curso < DateTime.Now);
+                btnVerDetalles.Enabled = esAdmin ? true : cursoVigente;
+                //btnVerDetalles.Enabled = !(curso.fecha_fin_curso < DateTime.Now);
                 btnVerDetalles.Click += (sender, e) => MostrarDetallesCurso(cursoId);
 
                 contentPanel.Controls.Add(lblNombre);

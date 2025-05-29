@@ -49,20 +49,23 @@ namespace GUI
                 txtDescripcion.Text = _evento.descripcion_evento;
                 lblAsistentes.Text = $"Asistentes: {_eventoDto?.NumeroAsistentes ?? 0}/{_evento.capacidad_max_evento}";
 
-                // Cargar la imagen si existe
+                // Load image if available
                 if (!string.IsNullOrEmpty(_evento.ruta_imagen_evento) && File.Exists(_evento.ruta_imagen_evento))
                 {
                     try
                     {
-                        pictureBox.Image = Image.FromFile(_evento.ruta_imagen_evento);
-                        pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        using (var originalImage = Image.FromFile(_evento.ruta_imagen_evento))
+                        {
+                            pictureBox.Image = new Bitmap(originalImage);
+                        }
+                        pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
                     catch (Exception ex)
                     {
-                        // Si hay un error al cargar la imagen, simplemente no la mostramos
                         Console.WriteLine($"Error al cargar la imagen: {ex.Message}");
                     }
                 }
+
                 // Determinar si el usuario ya está registrado
                 bool yaRegistrado = false;
                 if (Session.CurrentUser != null)

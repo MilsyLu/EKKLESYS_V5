@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ENTITY;
+using System.Diagnostics;
 
 namespace DAL
 {
@@ -27,9 +28,9 @@ namespace DAL
                 {
                     command.Connection = connection;
                     command.CommandText = @"INSERT INTO Cursos (nombre_curso, descripcion_curso, fecha_inicio_curso, 
-                                  fecha_fin_curso, capacidad_max_curso, ruta_imagen_curso) 
+                                  fecha_fin_curso, capacidad_max_curso, ruta_imagen_curso, id_administrador) 
                                   VALUES (:nombre_curso, :descripcion_curso, :fecha_inicio_curso, 
-                                  :fecha_fin_curso, :capacidad_max_curso, :ruta_imagen_curso)
+                                  :fecha_fin_curso, :capacidad_max_curso, :ruta_imagen_curso, :id_administrador)
                                   RETURNING id_curso INTO :id_curso";
 
                     command.Parameters.Add(":nombre_curso", OracleDbType.Varchar2).Value = curso.nombre_curso;
@@ -39,6 +40,8 @@ namespace DAL
                     command.Parameters.Add(":capacidad_max_curso", OracleDbType.Int32).Value = curso.capacidad_max_curso;
                     command.Parameters.Add(":ruta_imagen_curso", OracleDbType.Varchar2).Value =
                         string.IsNullOrEmpty(curso.ruta_imagen_curso) ? DBNull.Value : (object)curso.ruta_imagen_curso;
+                    command.Parameters.Add(":id_administrador", OracleDbType.Int32).Value = curso.id_administrador;
+
 
                     // Parámetro de salida para el ID generado
                     OracleParameter idParam = new OracleParameter(":id_curso", OracleDbType.Int32);
@@ -127,7 +130,25 @@ namespace DAL
             }
         }
 
+        public int ObtenerIdAdministradorPorUsuario(int idUsuario)
+        {
+            using (var connection = connectionManager.GetConnection())
+            {
+                connection.Open();
+                using (var command = new OracleCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT id_administrador FROM ADMINISTRADORES WHERE id_usuario = :id_usuario";
+                    command.Parameters.Add(":id_usuario", OracleDbType.Int32).Value = idUsuario;
 
+                    var result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                        return Convert.ToInt32(result);
+                    else
+                        throw new Exception("El usuario no es un administrador registrado.");
+                }
+            }
+        }
         public Curso BuscarPorId(int idCurso)
         {
             Curso curso = null;
@@ -214,7 +235,8 @@ namespace DAL
                 fecha_inicio_curso = Convert.ToDateTime(reader["fecha_inicio_curso"]),
                 fecha_fin_curso = Convert.ToDateTime(reader["fecha_fin_curso"]),
                 capacidad_max_curso = Convert.ToInt32(reader["capacidad_max_curso"]),
-                ruta_imagen_curso = reader["ruta_imagen_curso"] != DBNull.Value ? reader["ruta_imagen_curso"].ToString() : null
+                ruta_imagen_curso = reader["ruta_imagen_curso"] != DBNull.Value ? reader["ruta_imagen_curso"].ToString() : null,
+                id_administrador = reader["id_administrador"] != DBNull.Value ? Convert.ToInt32(reader["id_administrador"]) : 0
             };
         }
 

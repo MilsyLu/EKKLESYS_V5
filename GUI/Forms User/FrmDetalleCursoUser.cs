@@ -50,20 +50,23 @@ namespace GUI
                 txtDescripcion.Text = _curso.descripcion_curso;
                 lblInscritos.Text = $"Inscritos: {_cursoDto?.NumeroInscritos ?? 0}/{_curso.capacidad_max_curso}";
 
-                // Cargar la imagen si existe
+                
                 if (!string.IsNullOrEmpty(_curso.ruta_imagen_curso) && File.Exists(_curso.ruta_imagen_curso))
                 {
                     try
                     {
-                        pictureBox.Image = Image.FromFile(_curso.ruta_imagen_curso);
-                        pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        using (var originalImage = Image.FromFile(_curso.ruta_imagen_curso))
+                        {
+                            pictureBox.Image = new Bitmap(originalImage);
+                        }
+                        pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
                     catch (Exception ex)
                     {
-                        // Si hay un error al cargar la imagen, simplemente no la mostramos
                         Console.WriteLine($"Error al cargar la imagen: {ex.Message}");
                     }
                 }
+
                 // Determinar si el usuario ya está inscrito
                 bool yaInscrito = false;
                 if (Session.CurrentUser != null)

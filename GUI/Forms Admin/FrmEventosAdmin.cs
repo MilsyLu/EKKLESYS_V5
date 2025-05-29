@@ -230,6 +230,9 @@ namespace GUI
 
                 progressContainer.Controls.Add(progressBar);
 
+                bool esAdmin = Session.CurrentUser?.es_administrador == "S";
+                bool eventoVigente = evento.fecha_fin_evento >= DateTime.Now;
+
                 Button btnVerDetalles = new Button
                 {
                     Text = "Ver detalles",
@@ -247,7 +250,8 @@ namespace GUI
                 ApplyRoundedCorners(btnVerDetalles, 5);
 
                 int eventoId = evento.id_evento;
-                btnVerDetalles.Enabled = !(evento.fecha_fin_evento < DateTime.Now);
+                btnVerDetalles.Enabled = esAdmin ? true : eventoVigente;
+                //btnVerDetalles.Enabled = !(evento.fecha_fin_evento < DateTime.Now);
                 btnVerDetalles.Click += (sender, e) => MostrarDetallesEvento(eventoId);
 
                 contentPanel.Controls.Add(lblNombre);

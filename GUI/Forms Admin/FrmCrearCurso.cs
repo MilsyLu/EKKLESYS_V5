@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -59,7 +60,9 @@ namespace GUI
                         ruta_imagen_curso = rutaImagenGuardada
                     };
 
-                    string resultado = cursoService.Guardar(curso);
+                    string resultado = cursoService.GuardarCursoComoAdmin(curso, Session.CurrentUser.id_usuario);
+
+                    //string resultado = cursoService.Guardar(curso);
                     MessageBox.Show(resultado, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (!resultado.StartsWith("Error"))

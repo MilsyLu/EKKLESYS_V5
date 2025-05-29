@@ -50,7 +50,16 @@ namespace GUI
             {
                 txtNombre.Text = Session.CurrentUser.nombre;
                 txtApellido.Text = Session.CurrentUser.apellido_paterno;
-                dtpFechaNacimiento.Value = Session.CurrentUser.fecha_nacimiento;
+                if (Session.CurrentUser.fecha_nacimiento >= dtpFechaNacimiento.MinDate &&
+                    Session.CurrentUser.fecha_nacimiento <= dtpFechaNacimiento.MaxDate)
+                {
+                    dtpFechaNacimiento.Value = Session.CurrentUser.fecha_nacimiento;
+                }
+                else
+                {
+                    dtpFechaNacimiento.Value = dtpFechaNacimiento.MinDate; // O cualquier valor por defecto válido
+                }
+                //dtpFechaNacimiento.Value = Session.CurrentUser.fecha_nacimiento;
                 txtDireccion.Text = Session.CurrentUser.direccion;
                 txtTelefono.Text = Session.CurrentUser.telefono;
                 txtTelefono2.Text = Session.CurrentUser.telefono_2;
@@ -76,11 +85,31 @@ namespace GUI
             }
         }
 
+
         private void CargarCursos()
         {
             if (Session.CurrentUser != null)
             {
-                var cursos = cursoService.ConsultarCursosPorUsuario(Session.CurrentUser.id_usuario);
+                List<Curso> cursos;
+                if (Session.CurrentUser.es_administrador == "S")
+                {
+                    try
+                    {
+                        int idAdministrador = cursoService.ObtenerIdAdministradorPorUsuario(Session.CurrentUser.id_usuario);
+                        cursos = cursoService.Consultar()
+                            .Where(c => c.id_administrador == idAdministrador)
+                            .ToList();
+                    }
+                    catch
+                    {
+                        // Si no es admin registrado, no mostrar cursos
+                        cursos = new List<Curso>();
+                    }
+                }
+                else
+                {
+                    cursos = cursoService.ConsultarCursosPorUsuario(Session.CurrentUser.id_usuario);
+                }
                 dgvCursos.Rows.Clear();
                 foreach (var curso in cursos)
                 {
@@ -89,11 +118,48 @@ namespace GUI
             }
         }
 
+        //private void CargarCursos()
+        //{
+        //    if (Session.CurrentUser != null)
+        //    {
+        //        var cursos = cursoService.ConsultarCursosPorUsuario(Session.CurrentUser.id_usuario);
+        //        dgvCursos.Rows.Clear();
+        //        foreach (var curso in cursos)
+        //        {
+        //            dgvCursos.Rows.Add(curso.nombre_curso, curso.fecha_inicio_curso.ToShortDateString(), curso.fecha_fin_curso.ToShortDateString());
+        //        }
+        //    }
+        //}
+
+
         private void CargarEventos()
         {
             if (Session.CurrentUser != null)
             {
-                var eventos = eventoService.ConsultarEventosPorUsuario(Session.CurrentUser.id_usuario);
+                List<Evento> eventos;
+                if (Session.CurrentUser.es_administrador == "S")
+                {
+                    // Obtener el id_administrador real
+                    int idAdministrador = 0;
+                    try
+                    {
+                        idAdministrador = eventoService.ObtenerIdAdministradorPorUsuario(Session.CurrentUser.id_usuario);
+                    }
+                    catch
+                    {
+                        // Si no es admin registrado, no mostrar eventos
+                        eventos = new List<Evento>();
+                        dgvEventos.Rows.Clear();
+                        return;
+                    }
+                    eventos = eventoService.Consultar()
+                        .Where(e => e.id_administrador == idAdministrador)
+                        .ToList();
+                }
+                else
+                {
+                    eventos = eventoService.ConsultarEventosPorUsuario(Session.CurrentUser.id_usuario);
+                }
                 dgvEventos.Rows.Clear();
                 foreach (var evento in eventos)
                 {
@@ -101,6 +167,19 @@ namespace GUI
                 }
             }
         }
+
+        //private void CargarEventos()
+        //{
+        //    if (Session.CurrentUser != null)
+        //    {
+        //        var eventos = eventoService.ConsultarEventosPorUsuario(Session.CurrentUser.id_usuario);
+        //        dgvEventos.Rows.Clear();
+        //        foreach (var evento in eventos)
+        //        {
+        //            dgvEventos.Rows.Add(evento.nombre_evento, evento.fecha_inicio_evento.ToShortDateString(), evento.fecha_fin_evento.ToShortDateString());
+        //        }
+        //    }
+        //}
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
