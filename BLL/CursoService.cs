@@ -77,6 +77,20 @@ namespace BLL
                 curso.id_administrador = idAdministrador;
 
                 cursoRepository.Guardar(curso);
+                // *** NUEVA FUNCIONALIDAD: Enviar notificación de nuevo curso ***
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        var emailNotificationService = new EmailNotificationService();
+                        emailNotificationService.NotificarCreacionCurso(curso);
+                    }
+                    catch (Exception emailEx)
+                    {
+                        // Puedes loguear el error si lo deseas
+                        Console.WriteLine($"Error al enviar notificaciones de nuevo curso: {emailEx.Message}");
+                    }
+                });
                 return $"Curso {curso.nombre_curso} guardado exitosamente";
             }
             catch (Exception ex)
