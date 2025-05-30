@@ -148,6 +148,7 @@ namespace BLL
                     id_usuario = usuario.id_usuario,
                     NombreCompleto = usuario.NombreCompleto,
                     email = usuario.email,
+                    telefono = usuario.telefono,
                     es_miembro = usuario.es_miembro == "S" ? "Sí" : "No",
                     es_administrador = usuario.es_administrador == "S" ? "Sí" : "No"
                 });

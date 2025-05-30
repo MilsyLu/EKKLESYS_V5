@@ -46,8 +46,8 @@ namespace GUI
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabInicio = new System.Windows.Forms.TabPage();
             this.panelBienvenida = new System.Windows.Forms.Panel();
-            this.btnEnviarRecordatorios = new FontAwesome.Sharp.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnComenzarAhora = new FontAwesome.Sharp.IconButton();
             this.lblBienvenida = new System.Windows.Forms.Label();
             this.lblDescripcionBienvenida = new System.Windows.Forms.Label();
             this.pictureBoxDashboard = new System.Windows.Forms.PictureBox();
@@ -82,7 +82,6 @@ namespace GUI
             this.linkTerminos = new System.Windows.Forms.LinkLabel();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lblFooterLogo = new System.Windows.Forms.Label();
-            this.btnComenzarAhora = new FontAwesome.Sharp.IconButton();
             this.panelHeader.SuspendLayout();
             this.panelNavigation.SuspendLayout();
             this.tabControlMain.SuspendLayout();
@@ -271,7 +270,6 @@ namespace GUI
             // panelBienvenida
             // 
             this.panelBienvenida.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(43)))), ((int)(((byte)(94)))));
-            this.panelBienvenida.Controls.Add(this.btnEnviarRecordatorios);
             this.panelBienvenida.Controls.Add(this.panel1);
             this.panelBienvenida.Controls.Add(this.pictureBoxDashboard);
             this.panelBienvenida.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -279,20 +277,6 @@ namespace GUI
             this.panelBienvenida.Name = "panelBienvenida";
             this.panelBienvenida.Size = new System.Drawing.Size(1010, 444);
             this.panelBienvenida.TabIndex = 0;
-            // 
-            // btnEnviarRecordatorios
-            // 
-            this.btnEnviarRecordatorios.BackColor = System.Drawing.Color.White;
-            this.btnEnviarRecordatorios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnviarRecordatorios.IconChar = FontAwesome.Sharp.IconChar.Envelope;
-            this.btnEnviarRecordatorios.IconColor = System.Drawing.Color.Black;
-            this.btnEnviarRecordatorios.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEnviarRecordatorios.Location = new System.Drawing.Point(27, 383);
-            this.btnEnviarRecordatorios.Name = "btnEnviarRecordatorios";
-            this.btnEnviarRecordatorios.Size = new System.Drawing.Size(66, 48);
-            this.btnEnviarRecordatorios.TabIndex = 6;
-            this.btnEnviarRecordatorios.UseVisualStyleBackColor = false;
-            this.btnEnviarRecordatorios.Click += new System.EventHandler(this.btnEnviarRecordatorios_Click);
             // 
             // panel1
             // 
@@ -303,6 +287,25 @@ namespace GUI
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(434, 231);
             this.panel1.TabIndex = 5;
+            // 
+            // btnComenzarAhora
+            // 
+            this.btnComenzarAhora.BackColor = System.Drawing.Color.White;
+            this.btnComenzarAhora.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnComenzarAhora.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnComenzarAhora.IconChar = FontAwesome.Sharp.IconChar.Telegram;
+            this.btnComenzarAhora.IconColor = System.Drawing.Color.DodgerBlue;
+            this.btnComenzarAhora.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnComenzarAhora.IconSize = 40;
+            this.btnComenzarAhora.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnComenzarAhora.Location = new System.Drawing.Point(124, 157);
+            this.btnComenzarAhora.Name = "btnComenzarAhora";
+            this.btnComenzarAhora.Size = new System.Drawing.Size(159, 48);
+            this.btnComenzarAhora.TabIndex = 4;
+            this.btnComenzarAhora.Text = "Comenzar Ahora";
+            this.btnComenzarAhora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnComenzarAhora.UseVisualStyleBackColor = false;
+            this.btnComenzarAhora.Click += new System.EventHandler(this.btnComenzarAhora_Click);
             // 
             // lblBienvenida
             // 
@@ -706,25 +709,6 @@ namespace GUI
             this.lblFooterLogo.TabIndex = 0;
             this.lblFooterLogo.Text = "EKKLESYS";
             // 
-            // btnComenzarAhora
-            // 
-            this.btnComenzarAhora.BackColor = System.Drawing.Color.White;
-            this.btnComenzarAhora.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnComenzarAhora.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnComenzarAhora.IconChar = FontAwesome.Sharp.IconChar.Telegram;
-            this.btnComenzarAhora.IconColor = System.Drawing.Color.DodgerBlue;
-            this.btnComenzarAhora.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnComenzarAhora.IconSize = 40;
-            this.btnComenzarAhora.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnComenzarAhora.Location = new System.Drawing.Point(124, 157);
-            this.btnComenzarAhora.Name = "btnComenzarAhora";
-            this.btnComenzarAhora.Size = new System.Drawing.Size(159, 48);
-            this.btnComenzarAhora.TabIndex = 4;
-            this.btnComenzarAhora.Text = "Comenzar Ahora";
-            this.btnComenzarAhora.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnComenzarAhora.UseVisualStyleBackColor = false;
-            this.btnComenzarAhora.Click += new System.EventHandler(this.btnComenzarAhora_Click);
-            // 
             // FrmInicio2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -813,7 +797,6 @@ namespace GUI
         private System.Windows.Forms.LinkLabel linkPrivacidad;
         private System.Windows.Forms.LinkLabel linkAyuda;
         private Panel panel1;
-        private FontAwesome.Sharp.IconButton btnEnviarRecordatorios;
         private FontAwesome.Sharp.IconButton btnComenzarAhora;
     }
 }
