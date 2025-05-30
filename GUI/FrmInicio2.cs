@@ -711,7 +711,7 @@ namespace GUI
             try
             {
                 await _botService.StartBotAsync();
-                MessageBox.Show("Bot de Telegram iniciado correctamente");
+                //MessageBox.Show("Bot de Telegram iniciado correctamente");
             }
             catch (Exception ex)
             {
