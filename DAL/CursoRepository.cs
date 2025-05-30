@@ -42,7 +42,6 @@ namespace DAL
                         string.IsNullOrEmpty(curso.ruta_imagen_curso) ? DBNull.Value : (object)curso.ruta_imagen_curso;
                     command.Parameters.Add(":id_administrador", OracleDbType.Int32).Value = curso.id_administrador;
 
-
                     // Parámetro de salida para el ID generado
                     OracleParameter idParam = new OracleParameter(":id_curso", OracleDbType.Int32);
                     idParam.Direction = System.Data.ParameterDirection.Output;
