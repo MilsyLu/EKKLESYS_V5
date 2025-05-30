@@ -22,6 +22,7 @@
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEliminarEvento = new FontAwesome.Sharp.IconButton();
+            this.btnEditarEvento = new FontAwesome.Sharp.IconButton();
             this.btnVerAsistentes = new System.Windows.Forms.Button();
             this.lblAsistentes = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
@@ -68,13 +69,14 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.lblLugar);
             this.panel2.Controls.Add(this.btnEliminarEvento);
+            this.panel2.Controls.Add(this.btnEditarEvento);
             this.panel2.Controls.Add(this.btnVerAsistentes);
             this.panel2.Controls.Add(this.lblAsistentes);
             this.panel2.Controls.Add(this.txtDescripcion);
             this.panel2.Controls.Add(this.lblDescripcion);
             this.panel2.Controls.Add(this.lblFechas);
+            this.panel2.Controls.Add(this.lblLugar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 327);
             this.panel2.Name = "panel2";
@@ -102,6 +104,27 @@
             this.btnEliminarEvento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEliminarEvento.UseVisualStyleBackColor = false;
             this.btnEliminarEvento.Click += new System.EventHandler(this.btnEliminarEvento_Click);
+            // 
+            // btnEditarEvento
+            // 
+            this.btnEditarEvento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditarEvento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnEditarEvento.FlatAppearance.BorderSize = 0;
+            this.btnEditarEvento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditarEvento.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEditarEvento.ForeColor = System.Drawing.Color.White;
+            this.btnEditarEvento.IconChar = FontAwesome.Sharp.IconChar.PencilAlt;
+            this.btnEditarEvento.IconColor = System.Drawing.Color.White;
+            this.btnEditarEvento.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnEditarEvento.IconSize = 24;
+            this.btnEditarEvento.Location = new System.Drawing.Point(450, 241);
+            this.btnEditarEvento.Name = "btnEditarEvento";
+            this.btnEditarEvento.Size = new System.Drawing.Size(147, 40);
+            this.btnEditarEvento.TabIndex = 9;
+            this.btnEditarEvento.Text = "Editar";
+            this.btnEditarEvento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEditarEvento.UseVisualStyleBackColor = false;
+            this.btnEditarEvento.Click += new System.EventHandler(this.btnEditarEvento_Click); // Ensure event handler is set
             // 
             // btnVerAsistentes
             // 
@@ -205,6 +228,7 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Panel panel2;
         private FontAwesome.Sharp.IconButton btnEliminarEvento;
+        private FontAwesome.Sharp.IconButton btnEditarEvento;
         private System.Windows.Forms.Button btnVerAsistentes;
         private System.Windows.Forms.Label lblAsistentes;
         private System.Windows.Forms.TextBox txtDescripcion;

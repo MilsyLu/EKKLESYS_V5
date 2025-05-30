@@ -23,14 +23,13 @@ namespace BLL
             usuarioRepository = new UsuarioRepository(connectionManager);
             eventoRepository = new EventoRepository(connectionManager);
             asistenciaEventoRepository = new AsistenciaEventoRepository(connectionManager, usuarioRepository);
-            emailNotificationService = new EmailNotificationService(); // Nuevo servicio
+            emailNotificationService = new EmailNotificationService();
         }
 
         public string Guardar(Evento evento)
         {
             try
             {
-                // Validar fechas
                 if (evento.fecha_inicio_evento > evento.fecha_fin_evento)
                 {
                     return "Error al guardar: La fecha de inicio no puede ser posterior a la fecha de fin";
@@ -38,7 +37,6 @@ namespace BLL
 
                 eventoRepository.Guardar(evento);
 
-                // *** NUEVA FUNCIONALIDAD: Enviar notificación de nuevo evento ***
                 try
                 {
                     emailNotificationService.NotificarCreacionEvento(evento);
@@ -47,7 +45,6 @@ namespace BLL
                 catch (Exception emailEx)
                 {
                     Console.WriteLine($"Error al enviar notificaciones de nuevo evento: {emailEx.Message}");
-                    // No fallar la operación principal por un error de email
                 }
 
                 return $"Evento {evento.nombre_evento} guardado exitosamente";
@@ -62,13 +59,11 @@ namespace BLL
         {
             try
             {
-                // Validar fechas
                 if (evento.fecha_inicio_evento > evento.fecha_fin_evento)
                 {
                     return "Error al guardar: La fecha de inicio no puede ser posterior a la fecha de fin";
                 }
 
-                // Obtener el id_administrador real desde la tabla ADMINISTRADORES
                 int idAdministrador = eventoRepository.ObtenerIdAdministradorPorUsuario(idUsuario);
                 evento.id_administrador = idAdministrador;
 
@@ -85,21 +80,18 @@ namespace BLL
         {
             try
             {
-                // Validar que el evento exista
                 var eventoExistente = eventoRepository.BuscarPorId(evento.id_evento);
                 if (eventoExistente == null)
                 {
                     return $"Error al modificar: El evento con ID {evento.id_evento} no existe";
                 }
 
-                // Validar fechas
                 if (evento.fecha_inicio_evento > evento.fecha_fin_evento)
                 {
                     return "Error al modificar: La fecha de inicio no puede ser posterior a la fecha de fin";
                 }
 
-                eventoRepository.Modificar(evento);
-                return $"Evento {evento.nombre_evento} modificado exitosamente";
+                return eventoRepository.ActualizarConProcedimiento(evento);
             }
             catch (Exception ex)
             {
@@ -111,7 +103,6 @@ namespace BLL
         {
             try
             {
-                // Validar que el evento exista
                 var evento = eventoRepository.BuscarPorId(idEvento);
                 if (evento == null)
                 {
@@ -213,34 +204,29 @@ namespace BLL
         {
             try
             {
-                // Validar que el usuario exista
                 var usuario = usuarioRepository.BuscarPorId(idUsuario);
                 if (usuario == null)
                 {
                     return $"Error al registrar asistencia: El usuario con ID {idUsuario} no existe";
                 }
 
-                // Validar que el evento exista
                 var evento = eventoRepository.BuscarPorId(idEvento);
                 if (evento == null)
                 {
                     return $"Error al registrar asistencia: El evento con ID {idEvento} no existe";
                 }
 
-                // Validar que no esté ya registrado
                 if (asistenciaEventoRepository.ExisteAsistencia(idUsuario, idEvento))
                 {
                     return $"Error al registrar asistencia: El usuario ya está registrado para este evento";
                 }
 
-                // Validar capacidad
                 evento.Asistentes = asistenciaEventoRepository.ConsultarAsistentesPorEvento(idEvento);
                 if (evento.NumeroAsistentes >= evento.capacidad_max_evento)
                 {
                     return $"Error al registrar asistencia: El evento ha alcanzado su capacidad máxima";
                 }
 
-                // Registrar asistencia
                 var asistencia = new Asistencia_evento
                 {
                     id_usuario = idUsuario,
@@ -260,27 +246,23 @@ namespace BLL
         {
             try
             {
-                // Validar que el usuario exista
                 var usuario = usuarioRepository.BuscarPorId(idUsuario);
                 if (usuario == null)
                 {
                     return $"Error al cancelar asistencia: El usuario con ID {idUsuario} no existe";
                 }
 
-                // Validar que el evento exista
                 var evento = eventoRepository.BuscarPorId(idEvento);
                 if (evento == null)
                 {
                     return $"Error al cancelar asistencia: El evento con ID {idEvento} no existe";
                 }
 
-                // Validar que esté registrado
                 if (!asistenciaEventoRepository.ExisteAsistencia(idUsuario, idEvento))
                 {
                     return $"Error al cancelar asistencia: El usuario no está registrado para este evento";
                 }
 
-                // Cancelar asistencia
                 asistenciaEventoRepository.Eliminar(idUsuario, idEvento);
 
                 return $"Asistencia al evento {evento.nombre_evento} cancelada exitosamente";

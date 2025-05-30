@@ -22,6 +22,7 @@
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEliminarCurso = new FontAwesome.Sharp.IconButton();
+            this.btnEditarCurso = new FontAwesome.Sharp.IconButton();
             this.btnVerEstudiantes = new System.Windows.Forms.Button();
             this.lblInscritos = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
@@ -68,6 +69,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Controls.Add(this.btnEliminarCurso);
+            this.panel2.Controls.Add(this.btnEditarCurso);
             this.panel2.Controls.Add(this.btnVerEstudiantes);
             this.panel2.Controls.Add(this.lblInscritos);
             this.panel2.Controls.Add(this.txtDescripcion);
@@ -100,6 +102,27 @@
             this.btnEliminarCurso.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEliminarCurso.UseVisualStyleBackColor = false;
             this.btnEliminarCurso.Click += new System.EventHandler(this.btnEliminarCurso_Click);
+            // 
+            // btnEditarCurso
+            // 
+            this.btnEditarCurso.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditarCurso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnEditarCurso.FlatAppearance.BorderSize = 0;
+            this.btnEditarCurso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditarCurso.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEditarCurso.ForeColor = System.Drawing.Color.White;
+            this.btnEditarCurso.IconChar = FontAwesome.Sharp.IconChar.PencilAlt;
+            this.btnEditarCurso.IconColor = System.Drawing.Color.White;
+            this.btnEditarCurso.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnEditarCurso.IconSize = 24;
+            this.btnEditarCurso.Location = new System.Drawing.Point(450, 241);
+            this.btnEditarCurso.Name = "btnEditarCurso";
+            this.btnEditarCurso.Size = new System.Drawing.Size(147, 40);
+            this.btnEditarCurso.TabIndex = 9;
+            this.btnEditarCurso.Text = "Editar";
+            this.btnEditarCurso.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEditarCurso.UseVisualStyleBackColor = false;
+            this.btnEditarCurso.Click += new System.EventHandler(this.btnEditarCurso_Click);
             // 
             // btnVerEstudiantes
             // 
@@ -191,11 +214,12 @@
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Panel panel2;
+        private FontAwesome.Sharp.IconButton btnEliminarCurso;
+        private FontAwesome.Sharp.IconButton btnEditarCurso;
         private System.Windows.Forms.Button btnVerEstudiantes;
         private System.Windows.Forms.Label lblInscritos;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label lblInstructor;
         private System.Windows.Forms.Label lblFechas;
-        private FontAwesome.Sharp.IconButton btnEliminarCurso;
     }
 }
