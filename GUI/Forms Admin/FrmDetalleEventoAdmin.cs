@@ -14,18 +14,20 @@ namespace GUI
         private readonly int _eventoId;
         private Evento _evento;
         private EventoDTO _eventoDto;
-        private bool _isProcessing = false; // Flag to prevent re-entry
+        private bool _isProcessing = false;
 
         public FrmDetalleEventoAdmin(int eventoId)
         {
             InitializeComponent();
             _eventoService = new EventoService();
             _eventoId = eventoId;
-            ConfigurarBotonEliminar(); // Configure button styling
-            // Ensure single event subscription
-            btnEliminarEvento.Click -= btnEliminarEvento_Click; // Remove any existing handler
-            btnEliminarEvento.Click += btnEliminarEvento_Click; // Add handler
-            Console.WriteLine("btnEliminarEvento.Click handler subscribed");
+            ConfigurarBotonEliminar();
+            ConfigurarBotonEditar();
+            btnEliminarEvento.Click -= btnEliminarEvento_Click;
+            btnEliminarEvento.Click += btnEliminarEvento_Click;
+            btnEditarEvento.Click -= btnEditarEvento_Click;
+            btnEditarEvento.Click += btnEditarEvento_Click;
+            Console.WriteLine("btnEliminarEvento.Click and btnEditarEvento.Click handlers subscribed");
             CargarEvento();
         }
 
@@ -41,7 +43,6 @@ namespace GUI
                     return;
                 }
 
-                // Load image if available
                 if (!string.IsNullOrEmpty(_evento.ruta_imagen_evento) && File.Exists(_evento.ruta_imagen_evento))
                 {
                     try
@@ -58,34 +59,33 @@ namespace GUI
                     }
                 }
 
-                // Load DTO data
                 var eventosDto = _eventoService.ConsultarDTO();
                 _eventoDto = eventosDto.Find(e => e.id_evento == _eventoId);
 
-                // Update UI controls
                 lblTitulo.Text = _evento.nombre_evento;
                 lblFechas.Text = $"Del {_evento.fecha_inicio_evento:dd/MM/yyyy} al {_evento.fecha_fin_evento:dd/MM/yyyy}";
                 lblLugar.Text = $"Lugar: {_evento.lugar_evento}";
                 txtDescripcion.Text = _evento.descripcion_evento;
                 lblAsistentes.Text = $"Asistentes: {_eventoDto?.NumeroAsistentes ?? 0}/{_evento.capacidad_max_evento}";
 
-                // Configure button visibility and log state
                 ConfigurarVisibilidadBotones();
                 Console.WriteLine($"btnEliminarEvento.Visible: {btnEliminarEvento.Visible}, Enabled: {btnEliminarEvento.Enabled}");
+                Console.WriteLine($"btnEditarEvento.Visible: {btnEditarEvento.Visible}, Enabled: {btnEditarEvento.Enabled}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar el evento: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar el evento: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
         }
 
         private void ConfigurarVisibilidadBotones()
         {
-            bool isAdmin = Session.CurrentUser?.es_administrador == "S";
+            bool isAdmin = Session.CurrentUser?.es_administrador == "S" || Session.CurrentUser == null;
             btnEliminarEvento.Visible = isAdmin;
-            btnEliminarEvento.Enabled = isAdmin; // Ensure button is enabled for admins
+            btnEliminarEvento.Enabled = isAdmin;
+            btnEditarEvento.Visible = isAdmin;
+            btnEditarEvento.Enabled = isAdmin;
             Console.WriteLine($"ConfigurarVisibilidadBotones: isAdmin={isAdmin}");
         }
 
@@ -100,7 +100,60 @@ namespace GUI
             btnEliminarEvento.IconColor = Color.White;
             btnEliminarEvento.IconSize = 24;
             btnEliminarEvento.TextImageRelation = TextImageRelation.ImageBeforeText;
-            // Event subscription moved to constructor
+        }
+
+        private void ConfigurarBotonEditar()
+        {
+            btnEditarEvento.BackColor = Color.FromArgb(255, 193, 7);
+            btnEditarEvento.FlatAppearance.BorderSize = 0;
+            btnEditarEvento.FlatStyle = FlatStyle.Flat;
+            btnEditarEvento.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnEditarEvento.ForeColor = Color.White;
+            btnEditarEvento.IconChar = IconChar.PencilAlt;
+            btnEditarEvento.IconColor = Color.White;
+            btnEditarEvento.IconSize = 24;
+            btnEditarEvento.TextImageRelation = TextImageRelation.ImageBeforeText;
+        }
+
+        private void btnEditarEvento_Click(object sender, EventArgs e)
+        {
+            if (_isProcessing) return;
+            _isProcessing = true;
+            btnEditarEvento.Enabled = false;
+
+            try
+            {
+                if (_evento == null)
+                {
+                    MessageBox.Show("No se pudo cargar el evento para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (Session.CurrentUser?.es_administrador != "S")
+                {
+                    MessageBox.Show("Solo los administradores pueden editar eventos", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (var frmEditar = new FrmCrearEvento(_evento))
+                {
+                    frmEditar.Text = "Editar Evento";
+                    if (frmEditar.ShowDialog() == DialogResult.OK)
+                    {
+                        CargarEvento();
+                        MessageBox.Show("Evento actualizado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al procesar la edición: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _isProcessing = false;
+                btnEditarEvento.Enabled = btnEditarEvento.Visible;
+            }
         }
 
         private void btnEliminarEvento_Click(object sender, EventArgs e)
@@ -114,14 +167,12 @@ namespace GUI
             {
                 if (Session.CurrentUser?.es_administrador != "S")
                 {
-                    MessageBox.Show("Solo los administradores pueden eliminar eventos",
-                        "Acceso denegado",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Solo los administradores pueden eliminar eventos", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 var confirmacion = MessageBox.Show(
-                    $"¿Está seguro que desea eliminar permanentemente el evento: {_evento.nombre_evento}?\n\nEsta acción no se puede deshacer.",
+                    $"¿Está seguro que desea eliminar permanentemente el evento: {_evento?.nombre_evento ?? "Desconocido"}?\n\nEsta acción no se puede deshacer.",
                     "Confirmar eliminación",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning,
@@ -132,13 +183,11 @@ namespace GUI
                     var resultado = _eventoService.Eliminar(_eventoId);
                     if (resultado.StartsWith("Error"))
                     {
-                        MessageBox.Show(resultado, "Error al eliminar",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(resultado, "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Evento eliminado exitosamente", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Evento eliminado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
@@ -146,14 +195,12 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar la eliminación: {ex.Message}",
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al procesar la eliminación: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 _isProcessing = false;
-                btnEliminarEvento.Enabled = btnEliminarEvento.Visible; // Re-enable only if visible
+                btnEliminarEvento.Enabled = btnEliminarEvento.Visible;
             }
         }
 
@@ -165,7 +212,6 @@ namespace GUI
 
         private void FrmDetalleEventoAdmin_Load(object sender, EventArgs e)
         {
-            // No additional logic needed
         }
     }
 }

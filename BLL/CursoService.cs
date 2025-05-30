@@ -24,14 +24,13 @@ namespace BLL
             usuarioRepository = new UsuarioRepository(connectionManager);
             cursoRepository = new CursoRepository(connectionManager);
             inscripcionCursoRepository = new InscripcionCursoRepository(connectionManager, usuarioRepository);
-            emailNotificationService = new EmailNotificationService(); // Nuevo servicio
+            emailNotificationService = new EmailNotificationService();
         }
 
         public string Guardar(Curso curso)
         {
             try
             {
-                // Validar fechas
                 if (curso.fecha_inicio_curso > curso.fecha_fin_curso)
                 {
                     return "Error al guardar: La fecha de inicio no puede ser posterior a la fecha de fin";
@@ -39,19 +38,13 @@ namespace BLL
 
                 cursoRepository.Guardar(curso);
 
-                // *** NUEVA FUNCIONALIDAD: Enviar notificación de nuevo curso ***
                 try
                 {
-                    //emailNotificationService.NotificarCreacionCurso(curso);
-                    //Console.WriteLine($"Notificaciones de nuevo curso enviadas para: {curso.nombre_curso}");
-                    var emailNotificationService = new EmailNotificationService();
                     string resultado = emailNotificationService.NotificarCreacionCurso(curso);
-                    // Opcional: mostrar resultado
                 }
                 catch (Exception emailEx)
                 {
                     Console.WriteLine($"Error al enviar notificaciones de nuevo curso: {emailEx.Message}");
-                    // No fallar la operación principal por un error de email
                 }
 
                 return $"Curso {curso.nombre_curso} guardado exitosamente";
@@ -66,13 +59,11 @@ namespace BLL
         {
             try
             {
-                // Validar fechas
                 if (curso.fecha_inicio_curso > curso.fecha_fin_curso)
                 {
                     return "Error al guardar: La fecha de inicio no puede ser posterior a la fecha de fin";
                 }
 
-                // Obtener el id_administrador real desde la tabla ADMINISTRADORES
                 int idAdministrador = cursoRepository.ObtenerIdAdministradorPorUsuario(idUsuario);
                 curso.id_administrador = idAdministrador;
 
@@ -103,21 +94,18 @@ namespace BLL
         {
             try
             {
-                // Validar que el curso exista
                 var cursoExistente = cursoRepository.BuscarPorId(curso.id_curso);
                 if (cursoExistente == null)
                 {
                     return $"Error al modificar: El curso con ID {curso.id_curso} no existe";
                 }
 
-                // Validar fechas
                 if (curso.fecha_inicio_curso > curso.fecha_fin_curso)
                 {
                     return "Error al modificar: La fecha de inicio no puede ser posterior a la fecha de fin";
                 }
 
-                cursoRepository.Modificar(curso);
-                return $"Curso {curso.nombre_curso} modificado exitosamente";
+                return cursoRepository.ActualizarConProcedimiento(curso);
             }
             catch (Exception ex)
             {
@@ -129,7 +117,6 @@ namespace BLL
         {
             try
             {
-                // Validar que el curso exista
                 var curso = cursoRepository.BuscarPorId(idCurso);
                 if (curso == null)
                 {
@@ -149,6 +136,7 @@ namespace BLL
         {
             return cursoRepository.ObtenerIdAdministradorPorUsuario(idUsuario);
         }
+
         public Curso BuscarPorId(int idCurso)
         {
             var curso = cursoRepository.BuscarPorId(idCurso);
@@ -228,34 +216,29 @@ namespace BLL
         {
             try
             {
-                // Validar que el usuario exista
                 var usuario = usuarioRepository.BuscarPorId(idUsuario);
                 if (usuario == null)
                 {
                     return $"Error al inscribirse: El usuario con ID {idUsuario} no existe";
                 }
 
-                // Validar que el curso exista
                 var curso = cursoRepository.BuscarPorId(idCurso);
                 if (curso == null)
                 {
                     return $"Error al inscribirse: El curso con ID {idCurso} no existe";
                 }
 
-                // Validar que no esté ya inscrito
                 if (inscripcionCursoRepository.ExisteInscripcion(idUsuario, idCurso))
                 {
                     return $"Error al inscribirse: El usuario ya está inscrito en este curso";
                 }
 
-                // Validar capacidad
                 curso.Estudiantes = inscripcionCursoRepository.ConsultarEstudiantesPorCurso(idCurso);
                 if (curso.NumeroInscritos >= curso.capacidad_max_curso)
                 {
                     return $"Error al inscribirse: El curso ha alcanzado su capacidad máxima";
                 }
 
-                // Inscribir
                 var inscripcion = new Inscripcion_curso
                 {
                     id_usuario = idUsuario,
@@ -275,27 +258,23 @@ namespace BLL
         {
             try
             {
-                // Validar que el usuario exista
                 var usuario = usuarioRepository.BuscarPorId(idUsuario);
                 if (usuario == null)
                 {
                     return $"Error al cancelar inscripción: El usuario con ID {idUsuario} no existe";
                 }
 
-                // Validar que el curso exista
                 var curso = cursoRepository.BuscarPorId(idCurso);
                 if (curso == null)
                 {
                     return $"Error al cancelar inscripción: El curso con ID {idCurso} no existe";
                 }
 
-                // Validar que esté inscrito
                 if (!inscripcionCursoRepository.ExisteInscripcion(idUsuario, idCurso))
                 {
                     return $"Error al cancelar inscripción: El usuario no está inscrito en este curso";
                 }
 
-                // Cancelar inscripción
                 inscripcionCursoRepository.Eliminar(idUsuario, idCurso);
 
                 return $"Inscripción al curso {curso.nombre_curso} cancelada exitosamente";

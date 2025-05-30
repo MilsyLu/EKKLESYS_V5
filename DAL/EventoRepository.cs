@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ENTITY;
+using System.Data;
 
 namespace DAL
 {
@@ -16,9 +17,6 @@ namespace DAL
         {
             this.connectionManager = connectionManager;
         }
-
-
-
 
         public void Guardar(Evento evento)
         {
@@ -44,15 +42,12 @@ namespace DAL
                         string.IsNullOrEmpty(evento.ruta_imagen_evento) ? DBNull.Value : (object)evento.ruta_imagen_evento;
                     command.Parameters.Add(":id_administrador", OracleDbType.Int32).Value = evento.id_administrador;
 
-
-                    // Parámetro de salida para el ID generado
                     OracleParameter idParam = new OracleParameter(":id_evento", OracleDbType.Int32);
                     idParam.Direction = System.Data.ParameterDirection.Output;
                     command.Parameters.Add(idParam);
 
                     command.ExecuteNonQuery();
 
-                    // Solución: Manejar correctamente la conversión de OracleDecimal
                     if (idParam.Value is Oracle.ManagedDataAccess.Types.OracleDecimal oracleDecimal)
                     {
                         evento.id_evento = Convert.ToInt32(oracleDecimal.Value);
@@ -65,9 +60,7 @@ namespace DAL
             }
         }
 
-
-
-        public void Modificar(Evento evento)
+        public string ActualizarConProcedimiento(Evento evento)
         {
             using (var connection = connectionManager.GetConnection())
             {
@@ -75,28 +68,39 @@ namespace DAL
                 using (var command = new OracleCommand())
                 {
                     command.Connection = connection;
-                    command.CommandText = @"UPDATE Eventos SET nombre_evento = :nombre_evento, lugar_evento = :lugar_evento, 
-                                  descripcion_evento = :descripcion_evento, fecha_inicio_evento = :fecha_inicio_evento, 
-                                  fecha_fin_evento = :fecha_fin_evento, capacidad_max_evento = :capacidad_max_evento,
-                                  ruta_imagen_evento = :ruta_imagen_evento 
-                                  WHERE id_evento = :id_evento";
+                    command.CommandText = "UPDATE_EVENTO";
+                    command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add(":id_evento", OracleDbType.Int32).Value = evento.id_evento;
-                    command.Parameters.Add(":nombre_evento", OracleDbType.Varchar2).Value = evento.nombre_evento;
-                    command.Parameters.Add(":lugar_evento", OracleDbType.Varchar2).Value = evento.lugar_evento;
-                    command.Parameters.Add(":descripcion_evento", OracleDbType.Varchar2).Value = evento.descripcion_evento;
-                    command.Parameters.Add(":fecha_inicio_evento", OracleDbType.Date).Value = evento.fecha_inicio_evento;
-                    command.Parameters.Add(":fecha_fin_evento", OracleDbType.Date).Value = evento.fecha_fin_evento;
-                    command.Parameters.Add(":capacidad_max_evento", OracleDbType.Int32).Value = evento.capacidad_max_evento;
-                    command.Parameters.Add(":ruta_imagen_evento", OracleDbType.Varchar2).Value =
+                    // Add parameters
+                    command.Parameters.Add("p_id_evento", OracleDbType.Int32).Value = evento.id_evento;
+                    command.Parameters.Add("p_nombre_evento", OracleDbType.Varchar2).Value = evento.nombre_evento ?? (object)DBNull.Value;
+                    command.Parameters.Add("p_lugar_evento", OracleDbType.Varchar2).Value = evento.lugar_evento ?? (object)DBNull.Value;
+                    command.Parameters.Add("p_descripcion_evento", OracleDbType.Varchar2).Value = evento.descripcion_evento ?? (object)DBNull.Value;
+                    command.Parameters.Add("p_fecha_inicio_evento", OracleDbType.Date).Value = evento.fecha_inicio_evento;
+                    command.Parameters.Add("p_fecha_fin_evento", OracleDbType.Date).Value = evento.fecha_fin_evento;
+                    command.Parameters.Add("p_capacidad_max_evento", OracleDbType.Int32).Value = evento.capacidad_max_evento;
+                    command.Parameters.Add("p_ruta_imagen_evento", OracleDbType.Varchar2).Value =
                         string.IsNullOrEmpty(evento.ruta_imagen_evento) ? DBNull.Value : (object)evento.ruta_imagen_evento;
 
-                    command.ExecuteNonQuery();
+                    // Execute the procedure
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        return $"Evento con ID {evento.id_evento} actualizado exitosamente";
+                    }
+                    catch (OracleException ex)
+                    {
+                        if (ex.Number == -20001)
+                            return $"Error: {ex.Message}"; // No event found
+                        else if (ex.Number == -20002)
+                            return $"Error al actualizar el evento: {ex.Message}";
+                        else
+                            return $"Error inesperado: {ex.Message}";
+                    }
                 }
             }
         }
 
-       
         public string Eliminar(int idEvento)
         {
             using (var connection = connectionManager.GetConnection())
@@ -106,7 +110,6 @@ namespace DAL
                 {
                     try
                     {
-                        // Primero eliminar las inscripciones asociadas (ajusta los nombres de tablas según tu esquema)
                         using (var commandInscripciones = new OracleCommand())
                         {
                             commandInscripciones.Connection = connection;
@@ -116,7 +119,6 @@ namespace DAL
                             commandInscripciones.ExecuteNonQuery();
                         }
 
-                        // Luego eliminar el evento
                         using (var commandEvento = new OracleCommand())
                         {
                             commandEvento.Connection = connection;
@@ -157,6 +159,7 @@ namespace DAL
                 }
             }
         }
+
         public Evento BuscarPorId(int idEvento)
         {
             Evento evento = null;
@@ -245,10 +248,7 @@ namespace DAL
                 capacidad_max_evento = Convert.ToInt32(reader["capacidad_max_evento"]),
                 ruta_imagen_evento = reader["ruta_imagen_evento"] != DBNull.Value ? reader["ruta_imagen_evento"].ToString() : null,
                 id_administrador = reader["id_administrador"] != DBNull.Value ? Convert.ToInt32(reader["id_administrador"]) : 0
-
             };
         }
-
-       
     }
 }
