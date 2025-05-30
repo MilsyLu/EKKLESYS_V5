@@ -34,6 +34,7 @@
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTelefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEsMiembro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEsAdmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -76,6 +77,7 @@
             this.colId,
             this.colNombre,
             this.colEmail,
+            this.colTelefono,
             this.colEsMiembro,
             this.colEsAdmin});
             this.dgvUsuarios.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -112,6 +114,15 @@
             this.colEmail.MinimumWidth = 6;
             this.colEmail.Name = "colEmail";
             this.colEmail.ReadOnly = true;
+            // 
+            // colTelefono
+            // 
+            this.colTelefono.DataPropertyName = "telefono_1"; // O "Telefono1" si estás usando entidades C#
+            this.colTelefono.HeaderText = "Teléfono";
+            this.colTelefono.MinimumWidth = 6;
+            this.colTelefono.Name = "colTelefono";
+            this.colTelefono.ReadOnly = true;
+
             // 
             // colEsMiembro
             // 
@@ -202,6 +213,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTelefono;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEsMiembro;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEsAdmin;
         private System.Windows.Forms.Panel panel2;

@@ -47,6 +47,7 @@ namespace GUI
                         usuario.id_usuario,
                         usuario.NombreCompleto,
                         usuario.email,
+                        usuario.telefono,
                         usuario.es_miembro,
                         usuario.es_administrador
                     );
