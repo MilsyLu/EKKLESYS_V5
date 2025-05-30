@@ -43,9 +43,12 @@ namespace DAL
                     command.Parameters.Add(":id_administrador", OracleDbType.Int32).Value = curso.id_administrador;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     // Parámetro de salida para el ID generado
 =======
 >>>>>>> 6f8011c5a6855480887f32f49b84697d8a357e79
+=======
+>>>>>>> Abraham
                     OracleParameter idParam = new OracleParameter(":id_curso", OracleDbType.Int32);
                     idParam.Direction = System.Data.ParameterDirection.Output;
                     command.Parameters.Add(idParam);

@@ -68,6 +68,19 @@ namespace BLL
                 evento.id_administrador = idAdministrador;
 
                 eventoRepository.Guardar(evento);
+                // *** NUEVA FUNCIONALIDAD: Enviar notificación de nuevo evento ***
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        var emailNotificationService = new EmailNotificationService();
+                        emailNotificationService.NotificarCreacionEvento(evento);
+                    }
+                    catch (Exception emailEx)
+                    {
+                        Console.WriteLine($"Error al enviar notificaciones de nuevo evento: {emailEx.Message}");
+                    }
+                });
                 return $"Curso {evento.nombre_evento} guardado exitosamente";
             }
             catch (Exception ex)
