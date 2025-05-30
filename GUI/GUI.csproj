@@ -227,6 +227,9 @@
     <EmbeddedResource Include="Forms Admin\FrmDetalleCursoAdmin.resx">
       <DependentUpon>FrmDetalleCursoAdmin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Admin\FrmDetalleEventoAdmin.resx">
+      <DependentUpon>FrmDetalleEventoAdmin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Admin\FrmEventosAdmin.resx">
       <DependentUpon>FrmEventosAdmin.cs</DependentUpon>
     </EmbeddedResource>
@@ -241,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms User\FrmDetalleCursoUser.resx">
       <DependentUpon>FrmDetalleCursoUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms User\FrmDetalleEventoUser.resx">
+      <DependentUpon>FrmDetalleEventoUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms User\FrmEventosUser.resx">
       <DependentUpon>FrmEventosUser.cs</DependentUpon>

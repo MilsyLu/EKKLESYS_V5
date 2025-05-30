@@ -41,7 +41,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(781, 60);
+            this.panel1.Size = new System.Drawing.Size(529, 60);
             this.panel1.TabIndex = 0;
             // 
             // lblTitulo
@@ -51,7 +51,7 @@
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(15, 15);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(208, 30);
+            this.lblTitulo.Size = new System.Drawing.Size(235, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Título del Evento";
             // 
@@ -61,7 +61,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox.Location = new System.Drawing.Point(0, 60);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(781, 267);
+            this.pictureBox.Size = new System.Drawing.Size(529, 267);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
@@ -81,7 +81,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 327);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(20);
-            this.panel2.Size = new System.Drawing.Size(781, 301);
+            this.panel2.Size = new System.Drawing.Size(529, 301);
             this.panel2.TabIndex = 2;
             // 
             // btnEliminarEvento
@@ -96,9 +96,9 @@
             this.btnEliminarEvento.IconColor = System.Drawing.Color.White;
             this.btnEliminarEvento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminarEvento.IconSize = 24;
-            this.btnEliminarEvento.Location = new System.Drawing.Point(614, 241);
+            this.btnEliminarEvento.Location = new System.Drawing.Point(398, 241);
             this.btnEliminarEvento.Name = "btnEliminarEvento";
-            this.btnEliminarEvento.Size = new System.Drawing.Size(147, 40);
+            this.btnEliminarEvento.Size = new System.Drawing.Size(105, 40);
             this.btnEliminarEvento.TabIndex = 8;
             this.btnEliminarEvento.Text = "Eliminar";
             this.btnEliminarEvento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -113,18 +113,18 @@
             this.btnEditarEvento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarEvento.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEditarEvento.ForeColor = System.Drawing.Color.White;
-            this.btnEditarEvento.IconChar = FontAwesome.Sharp.IconChar.PencilAlt;
+            this.btnEditarEvento.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             this.btnEditarEvento.IconColor = System.Drawing.Color.White;
             this.btnEditarEvento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEditarEvento.IconSize = 24;
-            this.btnEditarEvento.Location = new System.Drawing.Point(450, 241);
+            this.btnEditarEvento.Location = new System.Drawing.Point(285, 241);
             this.btnEditarEvento.Name = "btnEditarEvento";
-            this.btnEditarEvento.Size = new System.Drawing.Size(147, 40);
+            this.btnEditarEvento.Size = new System.Drawing.Size(96, 40);
             this.btnEditarEvento.TabIndex = 9;
             this.btnEditarEvento.Text = "Editar";
             this.btnEditarEvento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEditarEvento.UseVisualStyleBackColor = false;
-            this.btnEditarEvento.Click += new System.EventHandler(this.btnEditarEvento_Click); // Ensure event handler is set
+            this.btnEditarEvento.Click += new System.EventHandler(this.btnEditarEvento_Click);
             // 
             // btnVerAsistentes
             // 
@@ -148,7 +148,7 @@
             this.lblAsistentes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.lblAsistentes.Location = new System.Drawing.Point(20, 211);
             this.lblAsistentes.Name = "lblAsistentes";
-            this.lblAsistentes.Size = new System.Drawing.Size(76, 23);
+            this.lblAsistentes.Size = new System.Drawing.Size(104, 23);
             this.lblAsistentes.TabIndex = 5;
             this.lblAsistentes.Text = "Asistentes: 0";
             // 
@@ -161,7 +161,7 @@
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.ReadOnly = true;
-            this.txtDescripcion.Size = new System.Drawing.Size(741, 64);
+            this.txtDescripcion.Size = new System.Drawing.Size(483, 64);
             this.txtDescripcion.TabIndex = 4;
             // 
             // lblDescripcion
@@ -171,7 +171,7 @@
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblDescripcion.Location = new System.Drawing.Point(20, 84);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(148, 23);
+            this.lblDescripcion.Size = new System.Drawing.Size(197, 23);
             this.lblDescripcion.TabIndex = 3;
             this.lblDescripcion.Text = "Descripción del evento:";
             // 
@@ -182,7 +182,7 @@
             this.lblFechas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblFechas.Location = new System.Drawing.Point(20, 20);
             this.lblFechas.Name = "lblFechas";
-            this.lblFechas.Size = new System.Drawing.Size(55, 23);
+            this.lblFechas.Size = new System.Drawing.Size(67, 23);
             this.lblFechas.TabIndex = 0;
             this.lblFechas.Text = "Fechas:";
             // 
@@ -193,16 +193,16 @@
             this.lblLugar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblLugar.Location = new System.Drawing.Point(20, 50);
             this.lblLugar.Name = "lblLugar";
-            this.lblLugar.Size = new System.Drawing.Size(45, 23);
+            this.lblLugar.Size = new System.Drawing.Size(62, 23);
             this.lblLugar.TabIndex = 9;
             this.lblLugar.Text = "Lugar:";
             // 
             // FrmDetalleEventoAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(781, 628);
+            this.ClientSize = new System.Drawing.Size(529, 628);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.panel1);
@@ -219,6 +219,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -40,7 +40,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(781, 60);
+            this.panel1.Size = new System.Drawing.Size(526, 60);
             this.panel1.TabIndex = 0;
             // 
             // lblTitulo
@@ -50,7 +50,7 @@
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(15, 15);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(208, 30);
+            this.lblTitulo.Size = new System.Drawing.Size(220, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Título del Curso";
             // 
@@ -60,7 +60,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox.Location = new System.Drawing.Point(0, 60);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(781, 267);
+            this.pictureBox.Size = new System.Drawing.Size(526, 267);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
@@ -79,7 +79,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 327);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(20);
-            this.panel2.Size = new System.Drawing.Size(781, 301);
+            this.panel2.Size = new System.Drawing.Size(526, 301);
             this.panel2.TabIndex = 2;
             // 
             // btnEliminarCurso
@@ -94,9 +94,9 @@
             this.btnEliminarCurso.IconColor = System.Drawing.Color.White;
             this.btnEliminarCurso.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEliminarCurso.IconSize = 24;
-            this.btnEliminarCurso.Location = new System.Drawing.Point(614, 241);
+            this.btnEliminarCurso.Location = new System.Drawing.Point(398, 238);
             this.btnEliminarCurso.Name = "btnEliminarCurso";
-            this.btnEliminarCurso.Size = new System.Drawing.Size(147, 40);
+            this.btnEliminarCurso.Size = new System.Drawing.Size(103, 40);
             this.btnEliminarCurso.TabIndex = 8;
             this.btnEliminarCurso.Text = "Eliminar";
             this.btnEliminarCurso.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -111,13 +111,13 @@
             this.btnEditarCurso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarCurso.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEditarCurso.ForeColor = System.Drawing.Color.White;
-            this.btnEditarCurso.IconChar = FontAwesome.Sharp.IconChar.PencilAlt;
+            this.btnEditarCurso.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             this.btnEditarCurso.IconColor = System.Drawing.Color.White;
             this.btnEditarCurso.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btnEditarCurso.IconSize = 24;
-            this.btnEditarCurso.Location = new System.Drawing.Point(450, 241);
+            this.btnEditarCurso.Location = new System.Drawing.Point(282, 238);
             this.btnEditarCurso.Name = "btnEditarCurso";
-            this.btnEditarCurso.Size = new System.Drawing.Size(147, 40);
+            this.btnEditarCurso.Size = new System.Drawing.Size(100, 40);
             this.btnEditarCurso.TabIndex = 9;
             this.btnEditarCurso.Text = "Editar";
             this.btnEditarCurso.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -146,7 +146,7 @@
             this.lblInscritos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.lblInscritos.Location = new System.Drawing.Point(20, 211);
             this.lblInscritos.Name = "lblInscritos";
-            this.lblInscritos.Size = new System.Drawing.Size(69, 23);
+            this.lblInscritos.Size = new System.Drawing.Size(91, 23);
             this.lblInscritos.TabIndex = 5;
             this.lblInscritos.Text = "Inscritos: 0";
             // 
@@ -159,7 +159,7 @@
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.ReadOnly = true;
-            this.txtDescripcion.Size = new System.Drawing.Size(741, 64);
+            this.txtDescripcion.Size = new System.Drawing.Size(481, 64);
             this.txtDescripcion.TabIndex = 4;
             // 
             // lblInstructor
@@ -169,7 +169,7 @@
             this.lblInstructor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblInstructor.Location = new System.Drawing.Point(20, 84);
             this.lblInstructor.Name = "lblInstructor";
-            this.lblInstructor.Size = new System.Drawing.Size(140, 23);
+            this.lblInstructor.Size = new System.Drawing.Size(185, 23);
             this.lblInstructor.TabIndex = 3;
             this.lblInstructor.Text = "Descripción del curso:";
             // 
@@ -180,16 +180,16 @@
             this.lblFechas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.lblFechas.Location = new System.Drawing.Point(20, 20);
             this.lblFechas.Name = "lblFechas";
-            this.lblFechas.Size = new System.Drawing.Size(55, 23);
+            this.lblFechas.Size = new System.Drawing.Size(67, 23);
             this.lblFechas.TabIndex = 0;
             this.lblFechas.Text = "Fechas:";
             // 
             // FrmDetalleCursoAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(781, 628);
+            this.ClientSize = new System.Drawing.Size(526, 628);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.panel1);
@@ -206,6 +206,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

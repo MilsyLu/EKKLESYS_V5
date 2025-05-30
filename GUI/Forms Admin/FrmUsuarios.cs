@@ -9,12 +9,16 @@ namespace GUI
     public partial class FrmUsuarios : Form
     {
         private readonly UsuarioService _usuarioService;
+        private readonly Color placeholderColor = Color.Gray;
+        private readonly Color regularColor = Color.Black;
+        private readonly string placeholderText = "Buscar por nombre...";
 
         public FrmUsuarios()
         {
             InitializeComponent();
             _usuarioService = new UsuarioService();
             ConfigurarDataGridView();
+            ConfigurarPlaceholder();
             CargarUsuarios();
         }
 
@@ -29,12 +33,34 @@ namespace GUI
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.DefaultCellStyle.Font = new Font("Segoe UI", 9);
             dgvUsuarios.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-
-            // Establecer el estilo de las filas alternas
             dgvUsuarios.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
         }
 
-        private void CargarUsuarios()
+        private void ConfigurarPlaceholder()
+        {
+            txtBuscar.Text = placeholderText;
+            txtBuscar.ForeColor = placeholderColor;
+
+            txtBuscar.Enter += (s, e) =>
+            {
+                if (txtBuscar.Text == placeholderText)
+                {
+                    txtBuscar.Text = "";
+                    txtBuscar.ForeColor = regularColor;
+                }
+            };
+
+            txtBuscar.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+                {
+                    txtBuscar.Text = placeholderText;
+                    txtBuscar.ForeColor = placeholderColor;
+                }
+            };
+        }
+
+        private void CargarUsuarios(string searchTerm = null)
         {
             try
             {
@@ -43,18 +69,24 @@ namespace GUI
 
                 foreach (var usuario in usuarios)
                 {
-                    dgvUsuarios.Rows.Add(
-                        usuario.id_usuario,
-                        usuario.NombreCompleto,
-                        usuario.email,
-                        usuario.telefono,
-                        usuario.es_miembro,
-                        usuario.es_administrador
-                    );
+                    if (string.IsNullOrEmpty(searchTerm) || searchTerm == placeholderText ||
+                        usuario.NombreCompleto.ToLower().Contains(searchTerm.ToLower()))
+                    {
+                        dgvUsuarios.Rows.Add(
+                            usuario.id_usuario,
+                            usuario.NombreCompleto,
+                            usuario.email,
+                            usuario.telefono,
+                            usuario.es_miembro,
+                            usuario.es_administrador
+                        );
+                    }
                 }
 
-                // Ajustar el ancho de las columnas después de cargar los datos
                 dgvUsuarios.AutoResizeColumns();
+                label1.Text = (string.IsNullOrEmpty(searchTerm) || searchTerm == placeholderText)
+                    ? "Gestión de Usuarios"
+                    : $"Usuarios encontrados: {dgvUsuarios.Rows.Count}";
             }
             catch (Exception ex)
             {
@@ -65,10 +97,34 @@ namespace GUI
 
         private void FrmUsuarios_Load(object sender, EventArgs e)
         {
-            // Configurar visibilidad de botones según rol
             bool esAdmin = Session.CurrentUser?.es_administrador == "S";
             btnCambiarAdmin.Visible = esAdmin;
             btnCambiarMiembro.Visible = esAdmin;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                string searchTerm = txtBuscar.Text.Trim();
+                if (searchTerm == placeholderText) searchTerm = "";
+                CargarUsuarios(searchTerm);
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string searchTerm = txtBuscar.Text.Trim();
+            if (searchTerm == placeholderText) searchTerm = "";
+            CargarUsuarios(searchTerm);
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = placeholderText;
+            txtBuscar.ForeColor = placeholderColor;
+            CargarUsuarios();
         }
 
         private void btnCambiarAdmin_Click(object sender, EventArgs e)
@@ -105,7 +161,6 @@ namespace GUI
             {
                 try
                 {
-                    // Cambiar el estado de administrador
                     string nuevoEstado = esAdmin ? "N" : "S";
                     var resultado = _usuarioService.CambiarRolAdministrador(usuarioId, nuevoEstado);
 
@@ -163,7 +218,6 @@ namespace GUI
             {
                 try
                 {
-                    // Cambiar el estado de miembro
                     string nuevoEstado = esMiembro ? "N" : "S";
                     var resultado = _usuarioService.CambiarEstadoMiembro(usuarioId, nuevoEstado);
 
