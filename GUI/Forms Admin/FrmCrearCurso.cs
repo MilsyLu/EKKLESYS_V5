@@ -18,15 +18,46 @@ namespace GUI
     {
         private readonly CursoService cursoService;
         private string rutaImagen;
+        private Curso cursoToEdit;
 
-        public FrmCrearCurso()
+        public FrmCrearCurso() : this(null)
+        {
+        }
+
+        public FrmCrearCurso(Curso curso)
         {
             InitializeComponent();
             cursoService = new CursoService();
-            dtpFechaInicio.Value = DateTime.Now;
-            dtpFechaFin.Value = DateTime.Now.AddDays(30);
-        }
+            cursoToEdit = curso;
 
+            if (cursoToEdit != null)
+            {
+                txtNombreCurso.Text = cursoToEdit.nombre_curso;
+                txtDescripcion.Text = cursoToEdit.descripcion_curso;
+                dtpFechaInicio.Value = cursoToEdit.fecha_inicio_curso;
+                dtpFechaFin.Value = cursoToEdit.fecha_fin_curso;
+                nudCapacidad.Value = cursoToEdit.capacidad_max_curso;
+                rutaImagen = cursoToEdit.ruta_imagen_curso;
+
+                if (!string.IsNullOrEmpty(rutaImagen) && File.Exists(rutaImagen))
+                {
+                    try
+                    {
+                        pictureBox1.Image = Image.FromFile(rutaImagen);
+                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al cargar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                dtpFechaInicio.Value = DateTime.Now;
+                dtpFechaFin.Value = DateTime.Now.AddDays(30);
+            }
+        }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -34,20 +65,26 @@ namespace GUI
             {
                 try
                 {
-                    // Crear una carpeta para las imágenes si no existe
                     string carpetaImagenes = Path.Combine(Application.StartupPath, "Imagenes", "Cursos");
                     if (!Directory.Exists(carpetaImagenes))
                     {
                         Directory.CreateDirectory(carpetaImagenes);
                     }
 
-                    // Copiar la imagen a la carpeta de la aplicación si se seleccionó una
-                    string rutaImagenGuardada = null;
-                    if (!string.IsNullOrEmpty(rutaImagen))
+                    string rutaImagenGuardada = rutaImagen;
+                    if (!string.IsNullOrEmpty(rutaImagen) && (cursoToEdit == null || rutaImagen != cursoToEdit.ruta_imagen_curso))
                     {
                         string nombreArchivo = $"curso_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{Path.GetFileName(rutaImagen)}";
                         rutaImagenGuardada = Path.Combine(carpetaImagenes, nombreArchivo);
-                        File.Copy(rutaImagen, rutaImagenGuardada, true);
+                        try
+                        {
+                            File.Copy(rutaImagen, rutaImagenGuardada, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al copiar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
 
                     Curso curso = new Curso
@@ -60,9 +97,18 @@ namespace GUI
                         ruta_imagen_curso = rutaImagenGuardada
                     };
 
-                    string resultado = cursoService.GuardarCursoComoAdmin(curso, Session.CurrentUser.id_usuario);
+                    string resultado;
+                    if (cursoToEdit != null)
+                    {
+                        curso.id_curso = cursoToEdit.id_curso;
+                        curso.id_administrador = cursoToEdit.id_administrador;
+                        resultado = cursoService.Modificar(curso);
+                    }
+                    else
+                    {
+                        resultado = cursoService.GuardarCursoComoAdmin(curso, Session.CurrentUser.id_usuario);
+                    }
 
-                    //string resultado = cursoService.Guardar(curso);
                     MessageBox.Show(resultado, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (!resultado.StartsWith("Error"))
@@ -73,41 +119,10 @@ namespace GUI
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al crear curso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error al guardar curso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
-        //private void btnGuardar_Click(object sender, EventArgs e)
-        //{
-        //    if (ValidarCampos())
-        //    {
-        //        try
-        //        {
-        //            Curso curso = new Curso
-        //            {
-        //                nombre_curso = txtNombreCurso.Text,
-        //                descripcion_curso = txtDescripcion.Text,
-        //                fecha_inicio_curso = dtpFechaInicio.Value,
-        //                fecha_fin_curso = dtpFechaFin.Value,
-        //                capacidad_max_curso = (int)nudCapacidad.Value
-        //            };
-
-            //            string resultado = cursoService.Guardar(curso);
-            //            MessageBox.Show(resultado, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            //            if (!resultado.StartsWith("Error"))
-            //            {
-            //                this.DialogResult = DialogResult.OK;
-            //                this.Close();
-            //            }
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            MessageBox.Show($"Error al crear curso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        }
-            //    }
-            //}
 
         private bool ValidarCampos()
         {
@@ -146,7 +161,6 @@ namespace GUI
 
         private void FrmCrearCurso_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnImage_Click(object sender, EventArgs e)
@@ -159,8 +173,6 @@ namespace GUI
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     rutaImagen = openFileDialog.FileName;
-
-                    // Mostrar la imagen en el PictureBox
                     try
                     {
                         pictureBox1.Image = Image.FromFile(rutaImagen);
